@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TDI Begachka</title>
+    <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
 
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
@@ -17,7 +18,7 @@
       <div class="drawer-content flex flex-col">
         
         <div class="navbar w-full">
-          <a class="mx-2 flex-1 px-2">logo</a>
+          <a class="mx-2 flex-1 px-2" href="#main"><img class="h-[3rem] w-auto" src="img/tdibegachka.png" alt="logo"></a>
           <div class="flex-none lg:hidden">
             <label for="my-drawer-3" aria-label="open sidebar" class="btn btn-square btn-ghost">
               <svg
@@ -46,15 +47,17 @@
       <div class="drawer-side">
         <label for="my-drawer-3" aria-label="close sidebar" class="drawer-overlay"></label>
         <ul class="menu bg-base-200 min-h-full w-80 p-4">
-          <div class="flex justify-between">
-            <div class="pl-3 mb-5">logo</div>
-            <label for="my-drawer-3" aria-label="close sidebar" class="drawer-overlay">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 cursor-pointer">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-              </svg>
-            </label>
-          </div>
           
+          <li>
+            <div class="flex justify-between">
+              <a href="#main"><img for="my-drawer-3" class="h-[3rem] w-auto" src="img/tdibegachka.png" alt="logo"></a>
+              <label for="my-drawer-3" aria-label="close sidebar" class="drawer-overlay">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 cursor-pointer">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                </svg>
+              </label>
+            </div>
+          </li>
           <li><a href="#services">Услуги</a></li>
           <li><a href="#about_us">За нас</a></li>
           <li><a href="#contacts">Контакти</a></li>
@@ -64,7 +67,7 @@
   </header>
 
   <main>
-      <section>
+      <section id="main">
           <div class="hero min-h-screen"
               style="background-image: url(https://img.daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.webp);">
               <div class="hero-overlay"></div>
