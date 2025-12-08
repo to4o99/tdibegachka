@@ -51,7 +51,7 @@
         }
         
         .hero-bg {
-            background-image: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1619767886558-efdc259cde1a?q=80&w=2070&auto=format&fit=crop');
+            background-image: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.7)), url('images/hero-bg.png');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -214,7 +214,7 @@
         </div>
     </section>
 
-    <!-- FORM SECTION (Jotform Simulation) -->
+    <!-- FORM SECTION (Working Email Integration) -->
     <section id="tuning-form" class="py-24 bg-brand-dark relative">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="bg-brand-gray rounded-3xl shadow-2xl overflow-hidden border border-white/10">
@@ -225,14 +225,19 @@
                     </div>
 
                     <!-- 
-                        ВАЖНО ЗА ПОТРЕБИТЕЛЯ:
-                        Ако използвате Jotform + Stripe, тук е мястото, където трябва да поставите своя 
-                        Jotform Embed Code (iframe или script).
-                        
-                        В момента е визуализирана HTML форма, която имитира процеса.
+                       REAL WORKING FORM 
+                       Използва FormSubmit.co за обработка на имейли без нужда от backend сървър.
                     -->
                     
-                    <form id="inquiryForm" class="space-y-6" onsubmit="handleFormSubmit(event)">
+                    <form action="https://formsubmit.co/ludaka0099@gmail.com" method="POST" enctype="multipart/form-data" class="space-y-6">
+                        
+                        <!-- Hidden Configurations for FormSubmit -->
+                        <input type="hidden" name="_subject" value="Нова заявка за тунинг (TDI Begachka)">
+                        <input type="hidden" name="_template" value="table">
+                        <input type="hidden" name="_captcha" value="false"> <!-- Може да се промени на true за защита от спам -->
+                        <!-- Пренасочване към същата страница след успех -->
+                        <input type="hidden" name="_next" value="https://tdibegachka.com/"> <!-- Смени с реалния URL ако имаш такъв, или FormSubmit ще покаже страница за успех -->
+
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <!-- Name -->
                             <div>
@@ -283,7 +288,7 @@
                                     <div class="flex text-sm text-gray-400 justify-center">
                                         <span class="relative cursor-pointer rounded-md font-medium text-brand-red hover:text-red-500 focus-within:outline-none">
                                             <span>Качи файл</span>
-                                            <input id="file-upload" name="file-upload" type="file" accept=".bin" class="sr-only" onchange="updateFileName(this)">
+                                            <input id="file-upload" name="attachment" type="file" accept=".bin,.zip,.rar" class="sr-only" onchange="updateFileName(this)">
                                         </span>
                                         <p class="pl-1">или плъзнете тук</p>
                                     </div>
@@ -296,11 +301,8 @@
                         <!-- Submit Button -->
                         <div class="pt-4">
                             <button type="submit" class="w-full bg-gradient-to-r from-brand-red to-red-700 text-white font-bold py-4 px-4 rounded-lg hover:shadow-lg hover:shadow-red-900/50 transform hover:-translate-y-1 transition-all flex justify-center items-center gap-2">
-                                <i class="fa-solid fa-paper-plane"></i> Изпрати Запитване и Плати
+                                <i class="fa-solid fa-paper-plane"></i> Изпрати Запитване
                             </button>
-                            <p class="text-center text-xs text-gray-500 mt-3">
-                                <i class="fa-solid fa-lock"></i> Плащанията се обработват сигурно чрез Stripe (симулация)
-                            </p>
                         </div>
                     </form>
                 </div>
@@ -329,8 +331,8 @@
                     <a href="tel:+359888888888" class="text-gray-400 hover:text-brand-red transition-colors">
                         <i class="fa-solid fa-phone mr-2"></i> +359 888 888 888
                     </a>
-                    <a href="mailto:info@tdibegachka.com" class="text-gray-400 hover:text-brand-red transition-colors">
-                        <i class="fa-solid fa-envelope mr-2"></i> info@tdibegachka.com
+                    <a href="mailto:ludaka0099@gmail.com" class="text-gray-400 hover:text-brand-red transition-colors">
+                        <i class="fa-solid fa-envelope mr-2"></i> ludaka0099@gmail.com
                     </a>
                 </div>
 
@@ -371,35 +373,6 @@
             } else {
                 fileNameDisplay.classList.add('hidden');
             }
-        }
-
-        // Simulate Form Submission (Replace this with Jotform embed in production)
-        function handleFormSubmit(e) {
-            e.preventDefault();
-            
-            // Visual feedback
-            const btn = e.target.querySelector('button[type="submit"]');
-            const originalText = btn.innerHTML;
-            
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Обработване...';
-            btn.disabled = true;
-
-            setTimeout(() => {
-                alert("Благодарим за заявката! Това е демо версия. В реалния сайт тук ще се отвори Stripe плащане през Jotform.");
-                btn.innerHTML = '<i class="fa-solid fa-check"></i> Успешно изпратено!';
-                btn.classList.remove('from-brand-red', 'to-red-700');
-                btn.classList.add('bg-green-600');
-                
-                // Reset form after delay
-                setTimeout(() => {
-                    e.target.reset();
-                    document.getElementById('file-name').classList.add('hidden');
-                    btn.innerHTML = originalText;
-                    btn.classList.add('from-brand-red', 'to-red-700');
-                    btn.classList.remove('bg-green-600');
-                    btn.disabled = false;
-                }, 3000);
-            }, 1500);
         }
 
         // Navbar scroll effect
