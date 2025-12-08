@@ -26,6 +26,103 @@
             }
         }
     </script>
+    <!-- ИНТЕГРАЦИЯ НА LOGINRADIUS -->
+    <!-- Зареждане на LoginRadius SDK -->
+    <script src="https://auth.loginradius.com/cdn/screen/2.1.0/js/LoginRadiusV2.js"></script>
+    <script>
+        // ВАЖНО: ЗАМЕНЕТЕ С ВАШИТЕ РЕАЛНИ КЛЮЧОВЕ!
+        const LR_CONFIG = {
+            apiKey: "03d44e98-73a0-4075-b220-bcd01d66ea92", 
+            appName: "tdibegachka",
+            verificationUrl: window.location.origin + "/index.html",
+            resetPasswordUrl: window.location.origin + "/index.html",
+            redirectUrl: window.location.origin + "/pages/profile.html"
+        };
+
+        let commonOptions = {};
+        
+        // Функция за инициализиране на LoginRadius
+        function initLoginRadius() {
+            if (typeof LRObject === 'undefined') {
+                console.error("LoginRadius SDK не е зареден.");
+                return;
+            }
+
+            const LrInstance = new LRObject();
+            
+            // Проверка на състоянието на логване
+            LrInstance.init("isLoggedIn", {}, function (response) {
+                const navButtons = document.getElementById('nav-buttons');
+                const footerLinks = document.getElementById('footer-auth-link');
+
+                if (response.IsLoggedIn) {
+                    // Потребителят е логнат
+                    navButtons.innerHTML = `
+                        <a href="./profile.html" class="bg-primary text-white px-6 py-2 rounded-full font-semibold hover:bg-red-700 transition duration-300 shadow-xl">
+                            Моят Профил
+                        </a>
+                        <button onclick="logoutUser()" class="bg-gray-700 text-white px-6 py-2 rounded-full font-semibold hover:bg-gray-600 transition duration-300 shadow-xl ml-3">
+                            Изход
+                        </button>
+                    `;
+                    footerLinks.innerHTML = `<li><a href="./profile.html" class="hover:text-primary transition duration-300">Моят Профил</a></li>`;
+                } else {
+                    // Потребителят не е логнат
+                    navButtons.innerHTML = `
+                        <button onclick="showLoginPopup()" class="bg-primary text-white px-6 py-2 rounded-full font-semibold hover:bg-red-700 transition duration-300 shadow-xl">
+                            Вход / Регистрация
+                        </button>
+                    `;
+                    footerLinks.innerHTML = `<li><button onclick="showLoginPopup()" class="hover:text-primary transition duration-300">Вход / Регистрация</button></li>`;
+                }
+            });
+        }
+
+        // Функция за показване на попап за вход/регистрация
+        function showLoginPopup() {
+            const LrInstance = new LRObject();
+            LrInstance.util.ready(function() {
+                LrInstance.init("authentication", commonOptions);
+            });
+        }
+
+        // Функция за изход
+        function logoutUser() {
+            const LrInstance = new LRObject();
+            LrInstance.init("logout", {}, function(response) {
+                if (response.IsSuccess) {
+                    window.location.href = "../index.html"; // Пренасочване към началната страница след успешен изход
+                } else {
+                    console.error("Грешка при изход:", response);
+                }
+            });
+        }
+
+        // Глобална настройка на конфигурацията за LoginRadius
+        window.onload = function() {
+            // Задаваме конфигурацията
+            commonOptions = {
+                apiKey: LR_CONFIG.apiKey,
+                appName: LR_CONFIG.appName,
+                onSuccess: function (response) {
+                    console.log("Успешен вход:", response);
+                    window.location.href = LR_CONFIG.redirectUrl;
+                },
+                onError: function (errors) {
+                    console.error("Грешка при вход:", errors);
+                    alert("Грешка при вход/регистрация. Моля, опитайте отново.");
+                },
+                verificationUrl: LR_CONFIG.verificationUrl,
+                resetPasswordUrl: LR_CONFIG.resetPasswordUrl
+            };
+            
+            // Инициализираме LoginRadius след като страницата е заредена
+            initLoginRadius();
+        };
+    </script>
+    
+    <!-- Добавяне на стилове за LoginRadius попап (за да се показва коректно) -->
+    <link rel="stylesheet" href="https://auth.loginradius.com/cdn/screen/2.1.0/css/LoginRadiusV2.css">
 </head>
 <body class="bg-secondary text-gray-100 antialiased">
 
@@ -43,10 +140,13 @@
                 <a href="../index.html#kontakti" class="text-lg hover:text-primary transition duration-300">Контакти</a>
                 <a href="./za-nas.html" class="text-lg text-primary transition duration-300 font-semibold">За Нас</a>
             </nav>
-            <!-- Бутон за оферта -->
-            <a href="../index.html#oferta" class="hidden md:block bg-primary text-white px-6 py-2 rounded-full font-semibold hover:bg-red-700 transition duration-300 shadow-xl">
-                Заяви Оферта
-            </a>
+            <!-- Бутон за Вход / Профил (Динамичен) -->
+            <div id="nav-buttons" class="hidden md:flex items-center">
+                <!-- Тук ще се зареди "Вход / Регистрация" или "Моят Профил / Изход" от JS -->
+                <button onclick="showLoginPopup()" class="bg-primary text-white px-6 py-2 rounded-full font-semibold hover:bg-red-700 transition duration-300 shadow-xl">
+                    Вход / Регистрация
+                </button>
+            </div>
             <!-- Мобилно меню (за простота, само икона) -->
             <button class="md:hidden text-gray-100 hover:text-primary">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
@@ -82,9 +182,9 @@
                     Използваме само доказани и безопасни методи за ремапване на ECU, като гарантираме, че всички настройки са в рамките на толерансите на Вашия двигател и трансмисия. Нашият фокус върху TDI агрегатите ни позволява да предложим специализирани услуги на изключително конкурентни цени, без компромис с качеството. **Чип тунингът при нас е интелигентна инвестиция, а не голям разход.**
                 </p>
 
-                <a href="../index.html#oferta" class="inline-block bg-primary text-white px-8 py-3 rounded-full font-semibold hover:bg-red-700 transition duration-300 shadow-xl mt-4">
-                    Вижте как да станете Бегач
-                </a>
+                <button onclick="showLoginPopup()" class="inline-block bg-primary text-white px-8 py-3 rounded-full font-semibold hover:bg-red-700 transition duration-300 shadow-xl mt-4">
+                    Влезте, за да видите как да станете Бегач
+                </button>
             </div>
 
             <!-- Колона с изображение или илюстрация -->
@@ -141,7 +241,10 @@
                     <ul class="space-y-2 text-gray-400">
                         <li><a href="../index.html#uslugi" class="hover:text-primary transition duration-300">Услуги</a></li>
                         <li><a href="../index.html#predimstva" class="hover:text-primary transition duration-300">Предимства</a></li>
-                        <li><a href="../index.html#oferta" class="hover:text-primary transition duration-300">Заяви Оферта</a></li>
+                        <!-- Динамична връзка за вход/профил -->
+                        <div id="footer-auth-link">
+                            <li><button onclick="showLoginPopup()" class="hover:text-primary transition duration-300">Вход / Регистрация</button></li>
+                        </div>
                     </ul>
                 </div>
 
