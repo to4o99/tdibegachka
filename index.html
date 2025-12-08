@@ -1,245 +1,416 @@
 <!DOCTYPE html>
-<html lang="bg">
+<html lang="bg" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TDI Begachka | Чип Тунинг за Максимална Мощност</title>
-    <!-- Зареждане на Tailwind CSS -->
+    <title>TDI Begachka | Професионален Чип Тунинг</title>
+    <meta name="description" content="Чип тунинг на достъпни цени с персонално отношение. Качи своя .bin файл и отключи потенциала на автомобила си.">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Добавяне на шрифта Inter -->
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-    </style>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts - Exo 2 (Automotive feel) -->
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
+                    fontFamily: {
+                        sans: ['"Exo 2"', 'sans-serif'],
+                    },
                     colors: {
-                        'primary': '#E30613', // Агресивен червен цвят
-                        'secondary': '#1F2937', // Тъмно сиво за фон
-                        'accent': '#FBBF24', // Жълт акцент
+                        brand: {
+                            red: '#e11d48', // Rose-600
+                            dark: '#0f172a', // Slate-900
+                            gray: '#1e293b', // Slate-800
+                        }
                     }
                 }
             }
         }
     </script>
-</head>
-<body class="bg-secondary text-gray-100 antialiased">
-
-    <!-- Навигация -->
-    <header class="sticky top-0 z-50 bg-secondary bg-opacity-95 shadow-lg backdrop-blur-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-            <!-- Лого -->
-            <div class="text-3xl font-extrabold flex items-center text-primary">
-                TDI Begachka
-            </div>
-            <!-- Меню -->
-            <nav class="hidden md:flex space-x-8">
-                <a href="#uslugi" class="text-lg hover:text-primary transition duration-300">Услуги</a>
-                <a href="#predimstva" class="text-lg hover:text-primary transition duration-300">Предимства</a>
-                <a href="#kontakti" class="text-lg hover:text-primary transition duration-300">Контакти</a>
-                <a href="pages/za-nas.html" class="text-lg hover:text-primary transition duration-300">За Нас</a>
-            </nav>
-            <!-- Бутон за оферта -->
-            <a href="#oferta" class="hidden md:block bg-primary text-white px-6 py-2 rounded-full font-semibold hover:bg-red-700 transition duration-300 shadow-xl">
-                Заяви Оферта
-            </a>
-            <!-- Мобилно меню (за простота, само икона) -->
-            <button class="md:hidden text-gray-100 hover:text-primary">
-                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-            </button>
-        </div>
-    </header>
-
-    <!-- Hero Секция (Актуализирана с фоново изображение) -->
-    <section class="relative h-screen flex items-center justify-center overflow-hidden bg-cover bg-center"
-        style="background-image: url('./images/hero.png');">
-        <!-- Overlay за затъмняване на изображението и по-добра четимост на текста -->
-        <div class="absolute inset-0 bg-black opacity-60"></div>
+    
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #e11d48;
+        }
         
-        <div class="relative z-10 text-center px-4 max-w-4xl">
-            <h1 class="text-6xl sm:text-7xl lg:text-8xl font-black mb-6 leading-tight uppercase">
-                Открий <span class="text-primary">Истинската</span> Мощност
+        .hero-bg {
+            background-image: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.7)), url('images/hero-bg.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .file-upload-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body class="bg-brand-dark text-white font-sans antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-brand-dark/95 backdrop-blur-md border-b border-white/10 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <i class="fa-solid fa-gauge-high text-brand-red text-3xl"></i>
+                    <span class="font-bold text-2xl tracking-wider">TDI <span class="text-brand-red">Begachka</span></span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#services" class="hover:text-brand-red px-3 py-2 rounded-md text-sm font-medium transition-colors">Услуги</a>
+                        <a href="#about" class="hover:text-brand-red px-3 py-2 rounded-md text-sm font-medium transition-colors">За нас</a>
+                        <a href="#contacts" class="hover:text-brand-red px-3 py-2 rounded-md text-sm font-medium transition-colors">Контакти</a>
+                        <a href="#tuning-form" class="bg-brand-red hover:bg-red-700 text-white px-5 py-2 rounded-full text-sm font-bold transition-all transform hover:scale-105 shadow-lg shadow-red-900/50">
+                            Заяви Тунинг
+                        </a>
+                    </div>
+                </div>
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" onclick="toggleMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden bg-brand-gray border-b border-white/10" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#services" onclick="toggleMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Услуги</a>
+                <a href="#about" onclick="toggleMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">За нас</a>
+                <a href="#contacts" onclick="toggleMenu()" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Контакти</a>
+                <a href="#tuning-form" onclick="toggleMenu()" class="text-brand-red font-bold block px-3 py-2 rounded-md text-base">Заяви Тунинг</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg h-screen flex items-center justify-center relative px-4">
+        <div class="text-center max-w-4xl mx-auto z-10 animate-fade-in-up">
+            <div class="inline-block px-4 py-1 border border-brand-red/50 rounded-full bg-brand-red/10 text-brand-red font-semibold mb-6 text-sm tracking-widest uppercase">
+                Stage 1 & Custom Remap
+            </div>
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
+                Отключи <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-red to-orange-500">Скритата Мощ</span>
             </h1>
-            <p class="text-xl sm:text-2xl text-gray-300 mb-10">
-                Професионален Чип Тунинг за TDI двигатели. Повече К.С., Повече Въртящ Момент, По-добра Икономия.
+            <p class="text-xl md:text-2xl text-gray-300 mb-10 font-light">
+                Професионален чип тунинг с лично отношение. Повече конски сили, по-добър въртящ момент, оптимизиран разход.
             </p>
-            <a href="#uslugi" class="bg-primary text-white px-10 py-4 text-xl rounded-lg font-bold hover:bg-red-700 transition duration-300 transform hover:scale-105 shadow-2xl">
-                Започни Тунинга Сега
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#tuning-form" class="bg-brand-red hover:bg-red-700 text-white px-8 py-4 rounded-lg text-lg font-bold transition-all shadow-lg shadow-red-900/50 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-bolt"></i> Започни сега
+                </a>
+                <a href="#services" class="border border-white/20 hover:bg-white/10 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all backdrop-blur-sm">
+                    Научи повече
+                </a>
+            </div>
+        </div>
+        
+        <!-- Scroll Down Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <a href="#about" class="text-gray-400 hover:text-white">
+                <i class="fa-solid fa-chevron-down text-2xl"></i>
             </a>
         </div>
     </section>
 
-    <!-- Секция Предимства -->
-    <section id="predimstva" class="py-20 bg-gray-900">
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-brand-dark">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold text-center mb-16 text-primary">Защо да Изберете TDI Begachka?</h2>
-            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                <div class="relative">
+                    <div class="absolute -inset-4 bg-gradient-to-r from-brand-red to-purple-600 rounded-xl blur-lg opacity-30"></div>
+                    <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1966&auto=format&fit=crop" alt="Engine Tuning" class="relative rounded-xl shadow-2xl border border-white/10 w-full object-cover h-[400px]">
+                </div>
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6 border-l-4 border-brand-red pl-4">Защо TDI Begachka?</h2>
+                    <p class="text-gray-400 text-lg mb-6 leading-relaxed">
+                        Ние не сме просто сервиз, ние сме ентусиасти. Разбираме, че всеки автомобил е различен и всеки шофьор има специфични нужди.
+                    </p>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check text-brand-red mt-1 mr-3"></i>
+                            <span class="text-gray-300"><strong>Персонално отношение:</strong> Не използваме "готови" файлове от интернет без проверка. Всеки софтуер се адаптира.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check text-brand-red mt-1 mr-3"></i>
+                            <span class="text-gray-300"><strong>Достъпни цени:</strong> Качеството не трябва да струва цяло състояние. Предлагаме конкурентни пакети.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-check text-brand-red mt-1 mr-3"></i>
+                            <span class="text-gray-300"><strong>Онлайн процес:</strong> Изпрати файла си, ние ще го обработим и върнем готов за запис.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-brand-gray relative overflow-hidden">
+        <!-- Decoration elements -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-brand-red/5 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 bg-blue-600/5 rounded-full blur-3xl"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Нашите Услуги</h2>
+                <div class="w-24 h-1 bg-brand-red mx-auto rounded"></div>
+            </div>
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                
-                <!-- Карта 1: Мощност -->
-                <div class="bg-secondary p-8 rounded-xl shadow-2xl border-t-4 border-primary hover:shadow-primary transition duration-300 transform hover:-translate-y-1">
-                    <div class="flex items-center justify-center w-16 h-16 bg-primary rounded-full mb-6">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                <!-- Service 1 -->
+                <div class="bg-brand-dark p-8 rounded-2xl border border-white/5 hover:border-brand-red/50 transition-all duration-300 hover:-translate-y-2 group">
+                    <div class="w-14 h-14 bg-brand-red/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-brand-red transition-colors">
+                        <i class="fa-solid fa-microchip text-2xl text-brand-red group-hover:text-white"></i>
                     </div>
-                    <h3 class="text-2xl font-semibold mb-3 text-white">Увеличение на К.С.</h3>
-                    <p class="text-gray-400">Почувствайте мигновено увеличение на конските сили (К.С.) с до 30%, оптимизирайки работата на вашия TDI двигател.</p>
-                </div>
-                
-                <!-- Карта 2: Въртящ Момент -->
-                <div class="bg-secondary p-8 rounded-xl shadow-2xl border-t-4 border-primary hover:shadow-primary transition duration-300 transform hover:-translate-y-1">
-                    <div class="flex items-center justify-center w-16 h-16 bg-primary rounded-full mb-6">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18v-8.031c0-.853.991-1.353 1.706-.99l7.95 4.026c.715.362.715 1.41 0 1.772l-7.95 4.026c-.715.362-1.706-.138-1.706-.99V12"></path></svg>
-                    </div>
-                    <h3 class="text-2xl font-semibold mb-3 text-white">По-голям Въртящ Момент</h3>
-                    <p class="text-gray-400">По-добро ускорение и еластичност при ниски обороти. Идеално за изпреварване и градско шофиране.</p>
-                </div>
-                
-                <!-- Карта 3: Икономия -->
-                <div class="bg-secondary p-8 rounded-xl shadow-2xl border-t-4 border-primary hover:shadow-primary transition duration-300 transform hover:-translate-y-1">
-                    <div class="flex items-center justify-center w-16 h-16 bg-primary rounded-full mb-6">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.192-2.044-.532-3.003z"></path></svg>
-                    </div>
-                    <h3 class="text-2xl font-semibold mb-3 text-white">Оптимална Икономия</h3>
-                    <p class="text-gray-400">Въпреки увеличената мощност, оптимизацията води до намален разход на гориво при нормално шофиране.</p>
+                    <h3 class="text-xl font-bold mb-3">Stage 1 Ремап</h3>
+                    <p class="text-gray-400">
+                        Оптимален баланс между мощност и надеждност. Увеличаване на конските сили с до 30% без хардуерни промени.
+                    </p>
                 </div>
 
+                <!-- Service 2 -->
+                <div class="bg-brand-dark p-8 rounded-2xl border border-white/5 hover:border-brand-red/50 transition-all duration-300 hover:-translate-y-2 group">
+                    <div class="w-14 h-14 bg-brand-red/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-brand-red transition-colors">
+                        <i class="fa-solid fa-leaf text-2xl text-brand-red group-hover:text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Еко Тунинг</h3>
+                    <p class="text-gray-400">
+                        Софтуерна оптимизация за намаляване на разхода на гориво, идеално за служебни автомобили и дълги пътувания.
+                    </p>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="bg-brand-dark p-8 rounded-2xl border border-white/5 hover:border-brand-red/50 transition-all duration-300 hover:-translate-y-2 group">
+                    <div class="w-14 h-14 bg-brand-red/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-brand-red transition-colors">
+                        <i class="fa-solid fa-file-code text-2xl text-brand-red group-hover:text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Файлова Услуга</h3>
+                    <p class="text-gray-400">
+                        Специално за сервизи и напреднали потребители. Качвате оригинален файл (.bin), ние връщаме модифициран.
+                    </p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Секция Услуги (Чип Тунинг Етапи) -->
-    <section id="uslugi" class="py-20 bg-secondary">
+    <!-- FORM SECTION (Jotform Simulation) -->
+    <section id="tuning-form" class="py-24 bg-brand-dark relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-brand-gray rounded-3xl shadow-2xl overflow-hidden border border-white/10">
+                <div class="p-8 md:p-12">
+                    <div class="text-center mb-10">
+                        <h2 class="text-3xl font-bold mb-2">Заяви Тунинг Файл</h2>
+                        <p class="text-gray-400">Попълни формата и прикачи своя оригинален файл.</p>
+                    </div>
+
+                    <!-- 
+                        ВАЖНО ЗА ПОТРЕБИТЕЛЯ:
+                        Ако използвате Jotform + Stripe, тук е мястото, където трябва да поставите своя 
+                        Jotform Embed Code (iframe или script).
+                        
+                        В момента е визуализирана HTML форма, която имитира процеса.
+                    -->
+                    
+                    <form id="inquiryForm" class="space-y-6" onsubmit="handleFormSubmit(event)">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Name -->
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-300 mb-2">Вашето Име</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fa-solid fa-user text-gray-500"></i>
+                                    </div>
+                                    <input type="text" id="name" name="name" required class="block w-full pl-10 bg-brand-dark border border-gray-600 rounded-lg py-3 text-white focus:ring-2 focus:ring-brand-red focus:border-brand-red placeholder-gray-500 transition-all" placeholder="Иван Иванов">
+                                </div>
+                            </div>
+
+                            <!-- Phone -->
+                            <div>
+                                <label for="phone" class="block text-sm font-medium text-gray-300 mb-2">Телефон</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <i class="fa-solid fa-phone text-gray-500"></i>
+                                    </div>
+                                    <input type="tel" id="phone" name="phone" required class="block w-full pl-10 bg-brand-dark border border-gray-600 rounded-lg py-3 text-white focus:ring-2 focus:ring-brand-red focus:border-brand-red placeholder-gray-500 transition-all" placeholder="+359 888 123 456">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Имейл Адрес</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fa-solid fa-envelope text-gray-500"></i>
+                                </div>
+                                <input type="email" id="email" name="email" required class="block w-full pl-10 bg-brand-dark border border-gray-600 rounded-lg py-3 text-white focus:ring-2 focus:ring-brand-red focus:border-brand-red placeholder-gray-500 transition-all" placeholder="vashia@email.com">
+                            </div>
+                        </div>
+
+                        <!-- Description -->
+                        <div>
+                            <label for="description" class="block text-sm font-medium text-gray-300 mb-2">Описание на автомобила и желания</label>
+                            <textarea id="description" name="description" rows="4" class="block w-full bg-brand-dark border border-gray-600 rounded-lg p-3 text-white focus:ring-2 focus:ring-brand-red focus:border-brand-red placeholder-gray-500 transition-all" placeholder="Марка, Модел, Година, Двигател (код), ECU номер. Какво желаете (Stage 1, EGR Off...)?"></textarea>
+                        </div>
+
+                        <!-- File Upload (.bin) -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Прикачи Файл (.bin)</label>
+                            <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-600 border-dashed rounded-lg hover:border-brand-red transition-colors cursor-pointer group bg-brand-dark" onclick="document.getElementById('file-upload').click()">
+                                <div class="space-y-1 text-center">
+                                    <i class="fa-solid fa-cloud-arrow-up text-4xl text-gray-400 group-hover:text-brand-red mb-3 transition-colors"></i>
+                                    <div class="flex text-sm text-gray-400 justify-center">
+                                        <span class="relative cursor-pointer rounded-md font-medium text-brand-red hover:text-red-500 focus-within:outline-none">
+                                            <span>Качи файл</span>
+                                            <input id="file-upload" name="file-upload" type="file" accept=".bin" class="sr-only" onchange="updateFileName(this)">
+                                        </span>
+                                        <p class="pl-1">или плъзнете тук</p>
+                                    </div>
+                                    <p class="text-xs text-gray-500">BIN, ZIP до 10MB</p>
+                                    <p id="file-name" class="text-sm text-green-500 mt-2 font-semibold hidden"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="pt-4">
+                            <button type="submit" class="w-full bg-gradient-to-r from-brand-red to-red-700 text-white font-bold py-4 px-4 rounded-lg hover:shadow-lg hover:shadow-red-900/50 transform hover:-translate-y-1 transition-all flex justify-center items-center gap-2">
+                                <i class="fa-solid fa-paper-plane"></i> Изпрати Запитване и Плати
+                            </button>
+                            <p class="text-center text-xs text-gray-500 mt-3">
+                                <i class="fa-solid fa-lock"></i> Плащанията се обработват сигурно чрез Stripe (симулация)
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contacts" class="bg-black py-16 border-t border-white/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold text-center mb-16 text-accent">Нашите Услуги по Чип Тунинг</h2>
-            
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                
-                <!-- Етап 1: Stage 1 -->
-                <div class="bg-gray-800 p-8 rounded-xl shadow-2xl">
-                    <span class="text-4xl font-black text-primary block mb-4">STAGE 1</span>
-                    <h3 class="text-3xl font-bold mb-4">Софтуерна Оптимизация</h3>
-                    <p class="text-gray-300 mb-6">Идеален за стандартни автомобили. Тунингът се извършва в рамките на заводските толеранси и не изисква никакви хардуерни модификации. Фокус върху баланса между мощност и надеждност.</p>
-                    <ul class="space-y-3 text-gray-300 list-inside">
-                        <li class="flex items-center"><span class="text-primary mr-2 font-bold">&check;</span> До +20-30% К.С. и Въртящ Момент</li>
-                        <li class="flex items-center"><span class="text-primary mr-2 font-bold">&check;</span> Без Хардуерни Промени</li>
-                        <li class="flex items-center"><span class="text-primary mr-2 font-bold">&check;</span> Намален Разход на Гориво</li>
-                    </ul>
-                    <a href="#oferta" class="mt-8 inline-block bg-accent text-gray-900 px-8 py-3 rounded-full font-semibold hover:bg-yellow-600 transition duration-300">
-                        Виж Цени за Stage 1
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
+                <!-- Branding -->
+                <div>
+                    <div class="flex items-center justify-center md:justify-start gap-2 mb-4">
+                        <i class="fa-solid fa-gauge-high text-brand-red text-2xl"></i>
+                        <span class="font-bold text-xl tracking-wider">TDI <span class="text-brand-red">Begachka</span></span>
+                    </div>
+                    <p class="text-gray-500 text-sm">
+                        Твоят партньор за повече мощност и удоволствие от шофирането.
+                    </p>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="flex flex-col gap-4">
+                    <h4 class="text-white font-bold uppercase tracking-wide mb-2">Контакти</h4>
+                    <a href="tel:+359888888888" class="text-gray-400 hover:text-brand-red transition-colors">
+                        <i class="fa-solid fa-phone mr-2"></i> +359 888 888 888
+                    </a>
+                    <a href="mailto:info@tdibegachka.com" class="text-gray-400 hover:text-brand-red transition-colors">
+                        <i class="fa-solid fa-envelope mr-2"></i> info@tdibegachka.com
                     </a>
                 </div>
 
-                <!-- Етап 2: Stage 2 -->
-                <div class="bg-gray-800 p-8 rounded-xl shadow-2xl">
-                    <span class="text-4xl font-black text-primary block mb-4">STAGE 2</span>
-                    <h3 class="text-3xl font-bold mb-4">Максимална Производителност</h3>
-                    <p class="text-gray-300 mb-6">За ентусиасти, които искат повече. Изисква допълнителни хардуерни промени като премахване на DPF/EGR, спортен филтър или по-голям интеркулер. Осигурява максимална мощност от вашия двигател.</p>
-                    <ul class="space-y-3 text-gray-300 list-inside">
-                        <li class="flex items-center"><span class="text-primary mr-2 font-bold">&check;</span> До +40-50% К.С. и Въртящ Момент</li>
-                        <li class="flex items-center"><span class="text-primary mr-2 font-bold">&check;</span> Изисква Хардуерни Модификации</li>
-                        <li class="flex items-center"><span class="text-primary mr-2 font-bold">&check;</span> Оптимизация на DPF/EGR/VMAX</li>
-                    </ul>
-                    <a href="#oferta" class="mt-8 inline-block bg-primary text-white px-8 py-3 rounded-full font-semibold hover:bg-red-700 transition duration-300">
-                        Консултирай се за Stage 2
-                    </a>
+                <!-- Socials -->
+                <div class="flex flex-col gap-4 items-center md:items-start">
+                    <h4 class="text-white font-bold uppercase tracking-wide mb-2">Последвай ни</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-brand-red transition-colors">
+                            <i class="fa-brands fa-facebook-f text-white"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-brand-red transition-colors">
+                            <i class="fa-brands fa-instagram text-white"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- Секция CTA / Контакти -->
-    <section id="oferta" class="py-20 bg-gray-900">
-        <div class="max-w-4xl mx-auto text-center px-4">
-            <h2 class="text-4xl font-bold mb-4 text-white">Готови ли сте за Истински TDI Бегач?</h2>
-            <p class="text-xl text-gray-400 mb-10">Свържете се с нас днес, за да получите индивидуална оферта, базирана на модела и двигателя на Вашия автомобил.</p>
             
-            <form id="contact-form" class="bg-secondary p-8 rounded-xl shadow-2xl">
-                <div class="space-y-6">
-                    <div>
-                        <input type="text" placeholder="Име и Фамилия" required class="w-full bg-gray-800 border-gray-700 rounded-lg px-4 py-3 text-white focus:ring-primary focus:border-primary transition duration-300">
-                    </div>
-                    <div>
-                        <input type="email" placeholder="Email Адрес" required class="w-full bg-gray-800 border-gray-700 rounded-lg px-4 py-3 text-white focus:ring-primary focus:border-primary transition duration-300">
-                    </div>
-                    <div>
-                        <input type="tel" placeholder="Телефон за Връзка" required class="w-full bg-gray-800 border-gray-700 rounded-lg px-4 py-3 text-white focus:ring-primary focus:border-primary transition duration-300">
-                    </div>
-                    <div>
-                        <textarea placeholder="Модел и Година на Автомобила (напр. VW Golf 5 TDI, 2007)" rows="4" required class="w-full bg-gray-800 border-gray-700 rounded-lg px-4 py-3 text-white focus:ring-primary focus:border-primary transition duration-300"></textarea>
-                    </div>
-                </div>
-                <button type="submit" class="mt-8 w-full bg-primary text-white px-6 py-3 text-lg rounded-lg font-bold hover:bg-red-700 transition duration-300 transform hover:scale-[1.01] shadow-xl">
-                    Изпрати Запитване
-                </button>
-                <p id="form-message" class="mt-4 text-accent hidden"></p>
-            </form>
-
-        </div>
-    </section>
-
-    <!-- Футър / Контакти -->
-    <footer id="kontakti" class="bg-black py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left">
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 border-b border-gray-700 pb-8 mb-8">
-                
-                <!-- Лого и Информация -->
-                <div>
-                    <h3 class="text-2xl font-extrabold text-primary mb-4">TDI Begachka</h3>
-                    <p class="text-gray-400">Експерти в чип тунинга на TDI двигатели. Превръщаме Вашия автомобил в истински бегач!</p>
-                </div>
-                
-                <!-- Бързи Връзки -->
-                <div>
-                    <h3 class="text-xl font-semibold text-white mb-4">Меню</h3>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="#uslugi" class="hover:text-primary transition duration-300">Услуги</a></li>
-                        <li><a href="#predimstva" class="hover:text-primary transition duration-300">Предимства</a></li>
-                        <li><a href="#oferta" class="hover:text-primary transition duration-300">Заяви Оферта</a></li>
-                    </ul>
-                </div>
-
-                <!-- Контакти -->
-                <div>
-                    <h3 class="text-xl font-semibold text-white mb-4">Свържете се с Нас</h3>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><span class="font-bold text-accent">Телефон:</span> +359 888 XXX XXX</li>
-                        <li><span class="font-bold text-accent">Email:</span> office@tdibegachka.bg</li>
-                        <li><span class="font-bold text-accent">Адрес:</span> гр. София, ул. Примерна 10</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Авторски Права -->
-            <div class="text-center text-gray-500">
+            <div class="mt-12 pt-8 border-t border-gray-800 text-center text-gray-600 text-sm">
                 &copy; 2024 TDI Begachka. Всички права запазени.
             </div>
         </div>
-    </footer>
+    </section>
 
-    <!-- JavaScript за форма (имитация на изпращане) -->
+    <!-- Scripts -->
     <script>
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const messageElement = document.getElementById('form-message');
-            
-            messageElement.classList.remove('hidden', 'text-accent', 'text-primary');
-            messageElement.classList.add('text-accent');
-            messageElement.textContent = 'Изпращане на запитване...';
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
 
-            // Имитация на мрежова заявка
+        // File upload visual feedback
+        function updateFileName(input) {
+            const fileNameDisplay = document.getElementById('file-name');
+            if (input.files && input.files.length > 0) {
+                fileNameDisplay.textContent = 'Избран файл: ' + input.files[0].name;
+                fileNameDisplay.classList.remove('hidden');
+            } else {
+                fileNameDisplay.classList.add('hidden');
+            }
+        }
+
+        // Simulate Form Submission (Replace this with Jotform embed in production)
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            // Visual feedback
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Обработване...';
+            btn.disabled = true;
+
             setTimeout(() => {
-                // Успешно изпращане
-                messageElement.textContent = 'Благодарим Ви! Очаквайте наш отговор до 24 часа.';
-                messageElement.classList.remove('text-accent');
-                messageElement.classList.add('text-primary'); // Червен цвят за успех
-                this.reset(); // Изчистване на формата
+                alert("Благодарим за заявката! Това е демо версия. В реалния сайт тук ще се отвори Stripe плащане през Jotform.");
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> Успешно изпратено!';
+                btn.classList.remove('from-brand-red', 'to-red-700');
+                btn.classList.add('bg-green-600');
+                
+                // Reset form after delay
+                setTimeout(() => {
+                    e.target.reset();
+                    document.getElementById('file-name').classList.add('hidden');
+                    btn.innerHTML = originalText;
+                    btn.classList.add('from-brand-red', 'to-red-700');
+                    btn.classList.remove('bg-green-600');
+                    btn.disabled = false;
+                }, 3000);
             }, 1500);
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+            } else {
+                navbar.classList.remove('shadow-lg');
+            }
         });
     </script>
-
 </body>
 </html>
