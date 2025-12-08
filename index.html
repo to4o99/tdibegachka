@@ -54,15 +54,11 @@
         </div>
     </header>
 
-    <!-- Hero Секция -->
-    <section class="relative bg-black h-screen flex items-center justify-center overflow-hidden">
-        <!-- Фоново изображение (Placeholder) -->
-        <div class="absolute inset-0 opacity-30">
-            <!-- Placeholder for a high-performance TDI car engine bay or a fast car silhouette -->
-            <img src="https://placehold.co/1920x1080/1F2937/FBBF24?text=Мощен+Автомобил+TDI" 
-                 onerror="this.onerror=null; this.src='https://placehold.co/1920x1080/1F2937/FBBF24?text=Мощен+Автомобил+TDI'"
-                 alt="Изображение на тунингован автомобил TDI" class="w-full h-full object-cover">
-        </div>
+    <!-- Hero Секция (Актуализирана с фоново изображение) -->
+    <section class="relative h-screen flex items-center justify-center overflow-hidden bg-cover bg-center"
+        style="background-image: url('/images/hero.png');">
+        <!-- Overlay за затъмняване на изображението и по-добра четимост на текста -->
+        <div class="absolute inset-0 bg-black opacity-60"></div>
         
         <div class="relative z-10 text-center px-4 max-w-4xl">
             <h1 class="text-6xl sm:text-7xl lg:text-8xl font-black mb-6 leading-tight uppercase">
