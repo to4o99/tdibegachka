@@ -223,20 +223,14 @@
                         <h2 class="text-3xl font-bold mb-2">Заяви Тунинг</h2>
                         <p class="text-gray-400">Попълни формата и прикачи своя оригинален файл.</p>
                     </div>
-
-                    <!-- 
-                       REAL WORKING FORM 
-                       Използва FormSubmit.co за обработка на имейли без нужда от backend сървър.
-                    -->
                     
                     <form action="https://formsubmit.co/ludaka0099@gmail.com" method="POST" enctype="multipart/form-data" class="space-y-6">
                         
                         <!-- Hidden Configurations for FormSubmit -->
                         <input type="hidden" name="_subject" value="Нова заявка за тунинг (TDI Begachka)">
-                        <input type="hidden" name="_template" value="table">
+                        <input type="hidden" name="_template" value="basic">
                         <!-- <input type="hidden" name="_captcha" value="false"> -->
-                        <!-- Пренасочване към същата страница след успех -->
-                        <input type="hidden" name="_next" value="/thank-you.html">
+                        <input type="hidden" name="_next" value="https://to4o99.github.io/tdibegachka/thank-you.html">
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <!-- Name -->
@@ -264,7 +258,7 @@
 
                         <!-- Email -->
                         <div>
-                            <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Имейл Адрес</label>
+                            <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Имейл адрес</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i class="fa-solid fa-envelope text-gray-500"></i>
@@ -331,8 +325,8 @@
                     <a href="tel:+359888888888" class="text-gray-400 hover:text-brand-red transition-colors">
                         <i class="fa-solid fa-phone mr-2"></i> +359 888 888 888
                     </a>
-                    <a href="mailto:ludaka0099@gmail.com" class="text-gray-400 hover:text-brand-red transition-colors">
-                        <i class="fa-solid fa-envelope mr-2"></i> ludaka0099@gmail.com
+                    <a href="mailto:test@gmail.com" class="text-gray-400 hover:text-brand-red transition-colors">
+                        <i class="fa-solid fa-envelope mr-2"></i> test@gmail.com
                     </a>
                 </div>
 
